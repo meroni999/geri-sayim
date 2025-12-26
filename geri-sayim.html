@@ -4,31 +4,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        body { margin: 0; padding: 0; }
-        #mobile-content { display: none; text-align: center; padding: 10px; }
-        @media (max-width: 768px) { #mobile-content { display: block; } }
-        .mobile-img { width: 100%; max-width: 100%; height: auto; border-radius: 10px; }
+        /* MASAÜSTÜ: TAMAMEN BOŞ ve 0 PX */
+        body {
+            margin: 0;
+            padding: 0;
+            height: 1px; /* Masaüstü için 1px */
+            overflow: hidden;
+            background: transparent;
+        }
+        
+        /* MOBİL: NORMAL GÖSTER */
+        @media (max-width: 768px) {
+            body {
+                height: auto;
+                padding: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                min-height: 380px;
+            }
+            
+            .mobile-img {
+                width: 100%;
+                max-width: 380px;
+                height: auto;
+                border-radius: 10px;
+                border: 2px solid #459d47;
+                display: block;
+                margin: 0 auto;
+            }
+            
+            #mobile-content {
+                display: block;
+                text-align: center;
+                width: 100%;
+            }
+        }
+        
+        /* MASAÜSTÜ İÇİN: HER ŞEYİ GİZLE */
+        #mobile-content {
+            display: none;
+        }
+        
+        @media (max-width: 768px) {
+            #mobile-content {
+                display: block;
+            }
+        }
     </style>
 </head>
 <body>
     <div id="mobile-content">
-        <img src="https://i.imgur.com/Fy1nKjY.jpeg" class="mobile-img" alt="Mobil" id="main-img">
+        <img src="https://i.imgur.com/Fy1nKjY.jpeg" 
+             class="mobile-img" 
+             alt="Mobil Özel">
     </div>
-    
-    <script>
-        // Basit boyut ayarı
-        setInterval(function() {
-            var img = document.getElementById('main-img');
-            var height = 1;
-            
-            if (window.innerWidth <= 768 && img) {
-                height = img.offsetHeight + 20;
-            }
-            
-            try {
-                window.parent.postMessage({ height: height }, '*');
-            } catch(e) {}
-        }, 200);
-    </script>
 </body>
 </html>
