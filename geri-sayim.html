@@ -3,89 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mobil Özel</title>
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background: transparent;
-            font-family: Arial, sans-serif;
-        }
-        
-        #mobile-special {
-            display: none;
-            width: 100%;
-            text-align: center;
-            padding: 15px;
-            box-sizing: border-box;
-        }
-        
-        @media (max-width: 768px) {
-            #mobile-special {
-                display: block;
-            }
-        }
-        
-        .promo-img {
-            width: 100%;
-            max-width: 100%;
-            height: auto;
-            border-radius: 15px;
-            border: 3px solid #459d47;
-            box-shadow: 0 5px 20px rgba(69, 157, 71, 0.4);
-            display: block;
-            margin: 0 auto;
-        }
+        body { margin: 0; padding: 0; }
+        #mobile-content { display: none; text-align: center; padding: 10px; }
+        @media (max-width: 768px) { #mobile-content { display: block; } }
+        .mobile-img { width: 100%; max-width: 100%; height: auto; border-radius: 10px; }
     </style>
 </head>
 <body>
-    <div id="mobile-special">
-        <!-- RESMİNİZİ BURAYA EKLEYİN -->
-        <img src="https://i.imgur.com/Fy1nKjY.jpeg" 
-             class="promo-img"
-             alt="📱 MOBİL ÖZEL"
-             id="mobil-resim">
+    <div id="mobile-content">
+        <img src="https://i.imgur.com/Fy1nKjY.jpeg" class="mobile-img" alt="Mobil" id="main-img">
     </div>
     
     <script>
-        // Iframe boyutunu otomatik ayarla
-        function ayarlaIframeBoyutu() {
-            var isMobile = window.innerWidth <= 768;
-            var resim = document.getElementById('mobil-resim');
-            var yeniYukseklik = 1; // Masaüstü için 1px
+        // Basit boyut ayarı
+        setInterval(function() {
+            var img = document.getElementById('main-img');
+            var height = 1;
             
-            if (isMobile && resim) {
-                // Resmin gerçek yüksekliğini al
-                resim.onload = function() {
-                    yeniYukseklik = this.offsetHeight + 30; // + padding
-                    gonderBoyut(yeniYukseklik);
-                };
-                
-                // Resim zaten yüklüyse
-                if (resim.complete) {
-                    yeniYukseklik = resim.offsetHeight + 30;
-                    gonderBoyut(yeniYukseklik);
-                }
-            } else {
-                gonderBoyut(yeniYukseklik);
+            if (window.innerWidth <= 768 && img) {
+                height = img.offsetHeight + 20;
             }
-        }
-        
-        function gonderBoyut(yukseklik) {
-            // Ebeveyn iframe'e mesaj gönder
-            window.parent.postMessage({
-                type: 'resize',
-                height: yukseklik
-            }, '*');
-        }
-        
-        // Olayları dinle
-        window.addEventListener('load', ayarlaIframeBoyutu);
-        window.addEventListener('resize', ayarlaIframeBoyutu);
-        
-        // 100ms aralıklarla kontrol et
-        setInterval(ayarlaIframeBoyutu, 100);
+            
+            try {
+                window.parent.postMessage({ height: height }, '*');
+            } catch(e) {}
+        }, 200);
     </script>
 </body>
 </html>
-
