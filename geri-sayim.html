@@ -4,60 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        /* MASAÜSTÜ: TAMAMEN BOŞ ve 0 PX */
-        body {
-            margin: 0;
-            padding: 0;
-            height: 1px; /* Masaüstü için 1px */
-            overflow: hidden;
-            background: transparent;
+        /* MASAÜSTÜ İÇİN: 0 PX */
+        @media (min-width: 769px) {
+            html, body {
+                height: 0 !important;
+                min-height: 0 !important;
+                max-height: 0 !important;
+                overflow: hidden !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
         }
         
-        /* MOBİL: NORMAL GÖSTER */
+        /* MOBİL İÇİN: NORMAL */
         @media (max-width: 768px) {
             body {
-                height: auto;
-                padding: 10px;
+                margin: 0;
+                padding: 20px;
+                text-align: center;
+                min-height: 400px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                min-height: 380px;
             }
             
-            .mobile-img {
+            .mobile-image {
                 width: 100%;
-                max-width: 380px;
+                max-width: 350px;
                 height: auto;
-                border-radius: 10px;
-                border: 2px solid #459d47;
-                display: block;
-                margin: 0 auto;
-            }
-            
-            #mobile-content {
-                display: block;
-                text-align: center;
-                width: 100%;
-            }
-        }
-        
-        /* MASAÜSTÜ İÇİN: HER ŞEYİ GİZLE */
-        #mobile-content {
-            display: none;
-        }
-        
-        @media (max-width: 768px) {
-            #mobile-content {
-                display: block;
+                border-radius: 12px;
+                border: 3px solid #459d47;
+                box-shadow: 0 5px 15px rgba(69, 157, 71, 0.3);
             }
         }
     </style>
 </head>
 <body>
-    <div id="mobile-content">
-        <img src="https://i.imgur.com/Fy1nKjY.jpeg" 
-             class="mobile-img" 
-             alt="Mobil Özel">
-    </div>
+    <!-- RESİM -->
+    <img src="https://i.imgur.com/Fy1nKjY.jpeg" 
+         class="mobile-image"
+         alt="Mobil Özel Promosyon">
 </body>
 </html>
