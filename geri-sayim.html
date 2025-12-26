@@ -1,38 +1,51 @@
 <!DOCTYPE html>
-<html>
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
-</head>
-<body>
-    <script>
-        // Ana pencerenin genişliğini kontrol et
-        var parentWidth = window.parent.innerWidth || window.top.innerWidth;
-        
-        // 720px'den küçükse resmi göster
-        if (parentWidth <= 720) {
-            document.body.innerHTML = `
-                <div style="text-align:center; padding:20px;">
-                    <img src="https://i.imgur.com/Fy1nKjY.jpeg" 
-                         style="width:100%; max-width:380px; height:auto; 
-                                border-radius:10px; border:3px solid #459d47;"
-                         alt="Mobil Özel">
-                </div>
-            `;
-            document.body.style.minHeight = "400px";
-        } else {
-            // 720px'den büyükse TAMAMEN BOŞ ve 0px
-            document.body.innerHTML = '';
-            document.body.style.height = "0";
-            document.body.style.margin = "0";
-            document.body.style.padding = "0";
-            document.body.style.overflow = "hidden";
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobil Özel</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 10px;
+            background: transparent;
+            height: 380px; /* Iframe yüksekliğinden 20px az */
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
-        // Iframe boyutunu güncelle
-        setTimeout(function() {
-            var height = document.body.scrollHeight;
-            window.parent.postMessage({ height: height }, '*');
-        }, 100);
-    </script>
+        /* Varsayılan: GİZLE */
+        #mobile-content {
+            display: none;
+            text-align: center;
+            width: 100%;
+        }
+        
+        /* MOBİLDE: GÖSTER */
+        @media (max-width: 768px) {
+            #mobile-content {
+                display: block;
+            }
+        }
+        
+        .mobile-img {
+            width: 100%;
+            max-width: 380px; /* Iframe'den biraz küçük */
+            height: auto;
+            max-height: 380px;
+            border-radius: 10px;
+            border: 2px solid #459d47;
+        }
+    </style>
+</head>
+<body>
+    <div id="mobile-content">
+        <img src="https://i.imgur.com/Fy1nKjY.jpeg" 
+             class="mobile-img" 
+             alt="Mobil Özel"
+             style="width: 100%; max-width: 380px;">
+    </div>
 </body>
 </html>
+
