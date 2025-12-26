@@ -9,72 +9,67 @@
             margin: 0;
             padding: 0;
             background: transparent;
+            overflow: hidden;
         }
         
-        .image-container {
-            width: 100%;
-            text-align: center;
-        }
-        
-        /* MASAÜSTÜ GÖRSELİ (Varsayılan) */
-        .desktop-img {
-            display: block;
-            width: 100%;
-            max-width: 800px;
-            height: auto;
-            margin: 0 auto;
-            border-radius: 15px;
-            border: 3px solid #459d47;
-            box-shadow: 0 5px 15px rgba(69, 157, 71, 0.3);
-        }
-        
-        /* MOBİL GÖRSELİ (Varsayılan gizli) */
-        .mobile-img {
-            display: none;
+        .mobile-only-image {
+            display: none; /* Varsayılan olarak GİZLE */
             width: 100%;
             max-width: 400px;
             height: auto;
             margin: 0 auto;
             border-radius: 15px;
             border: 3px solid #ff6b6b;
-            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
         }
         
-        /* MOBİL CİHAZLAR İÇİN */
+        /* SADECE MOBİL CİHAZLAR (768px ve altı) */
         @media only screen and (max-width: 768px) {
-            .desktop-img {
-                display: none;
+            .mobile-only-image {
+                display: block; /* Mobilde GÖSTER */
             }
-            .mobile-img {
-                display: block;
+        }
+        
+        /* Masaüstü için gizli tut (ekstra güvenlik) */
+        @media only screen and (min-width: 769px) {
+            body {
+                height: 0;
+                min-height: 0;
             }
         }
     </style>
 </head>
 <body>
-    <div class="image-container">
-        <!-- Masaüstü için görsel -->
-        <img class="desktop-img" 
-             src="https://s12.gifyu.com/images/bhSt4.jpg" 
-             alt="Masaüstü Promosyon">
-        
-        <!-- Mobil için görsel -->
-        <img class="mobile-img" 
-             src="https://s12.gifyu.com/images/bhSt4.jpg" 
-             alt="Mobil Özel Promosyon">
-    </div>
+    <!-- SADECE MOBİLDE GÖRÜNECEK GÖRSEL -->
+    <img class="mobile-only-image" 
+         src="https://i.imgur.com/Fy1nKjY.jpeg" 
+         alt="Mobil Özel Görsel">
     
     <script>
-        // Iframe boyutunu otomatik ayarla
-        function updateHeight() {
-            const height = document.body.scrollHeight;
-            window.parent.postMessage({ type: 'resize', height: height }, '*');
+        // Iframe boyutunu kontrol et
+        function updateIframeSize() {
+            const isMobile = window.innerWidth <= 768;
+            const img = document.querySelector('.mobile-only-image');
+            let height = 0;
+            
+            if (isMobile && img) {
+                height = img.offsetHeight + 10; // Görsel yüksekliği + margin
+            }
+            
+            // Iframe boyutunu güncelle
+            window.parent.postMessage({ 
+                type: 'iframe-resize', 
+                height: height,
+                isMobile: isMobile
+            }, '*');
         }
         
-        window.addEventListener('load', updateHeight);
-        window.addEventListener('resize', updateHeight);
+        // Sayfa yüklendiğinde ve boyut değiştiğinde
+        window.addEventListener('load', updateIframeSize);
+        window.addEventListener('resize', updateIframeSize);
+        
+        // Her saniye kontrol et (güvenlik için)
+        setInterval(updateIframeSize, 1000);
     </script>
 </body>
 </html>
-
-
