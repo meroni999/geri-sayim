@@ -3,73 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mobil Özel Görsel</title>
+    <title>Mobil Özel</title>
     <style>
         body {
             margin: 0;
             padding: 0;
             background: transparent;
-            overflow: hidden;
         }
         
-        .mobile-only-image {
-            display: none; /* Varsayılan olarak GİZLE */
+        /* Varsayılan: TAMAMEN GİZLE */
+        #mobile-special {
+            display: none;
             width: 100%;
-            max-width: 400px;
+            text-align: center;
+        }
+        
+        /* MOBİLDE: GÖSTER */
+        @media (max-width: 768px) {
+            #mobile-special {
+                display: block;
+            }
+        }
+        
+        .promo-img {
+            width: 100%;
+            max-width: 350px;
             height: auto;
-            margin: 0 auto;
-            border-radius: 15px;
-            border: 3px solid #ff6b6b;
-            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
-        }
-        
-        /* SADECE MOBİL CİHAZLAR (768px ve altı) */
-        @media only screen and (max-width: 768px) {
-            .mobile-only-image {
-                display: block; /* Mobilde GÖSTER */
-            }
-        }
-        
-        /* Masaüstü için gizli tut (ekstra güvenlik) */
-        @media only screen and (min-width: 769px) {
-            body {
-                height: 0;
-                min-height: 0;
-            }
+            border-radius: 12px;
+            border: 3px solid #459d47;
+            box-shadow: 0 0 20px rgba(69, 157, 71, 0.3);
         }
     </style>
 </head>
 <body>
-    <!-- SADECE MOBİLDE GÖRÜNECEK GÖRSEL -->
-    <img class="mobile-only-image" 
-         src="https://i.imgur.com/Fy1nKjY.jpeg" 
-         alt="Mobil Özel Görsel">
-    
-    <script>
-        // Iframe boyutunu kontrol et
-        function updateIframeSize() {
-            const isMobile = window.innerWidth <= 768;
-            const img = document.querySelector('.mobile-only-image');
-            let height = 0;
-            
-            if (isMobile && img) {
-                height = img.offsetHeight + 10; // Görsel yüksekliği + margin
-            }
-            
-            // Iframe boyutunu güncelle
-            window.parent.postMessage({ 
-                type: 'iframe-resize', 
-                height: height,
-                isMobile: isMobile
-            }, '*');
-        }
-        
-        // Sayfa yüklendiğinde ve boyut değiştiğinde
-        window.addEventListener('load', updateIframeSize);
-        window.addEventListener('resize', updateIframeSize);
-        
-        // Her saniye kontrol et (güvenlik için)
-        setInterval(updateIframeSize, 1000);
-    </script>
+    <div id="mobile-special">
+        <img src="https://i.imgur.com/Fy1nKjY.jpeg" 
+             class="promo-img"
+             alt="📱 MOBİL ÖZEL - %30 Ekstra Bonus">
+    </div>
 </body>
 </html>
