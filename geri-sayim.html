@@ -1,147 +1,78 @@
-
-<!doctype html>
+<!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Geri Sayım</title>
-  <style>
-    :root {
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-    }
-    body {
-      margin: 0;
-      display: grid;
-      place-items: center;
-      min-height: 100vh;
-      background: linear-gradient(135deg, #459D47, #5CB85C);
-      color: #fff;
-    }
-    .card {
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-radius: 20px;
-      padding: 28px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, .3);
-      width: min(680px, 92vw);
-      backdrop-filter: blur(10px);
-    }
-    h1 {
-      margin: 0 0 8px;
-      font-size: 28px;
-      letter-spacing: .5px;
-      text-align: center;
-      color: #fff;
-    }
-    .sub {
-      opacity: .9;
-      margin: 0 0 20px;
-      font-size: 15px;
-      text-align: center;
-    }
-    .timer {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-    }
-    .unit {
-      background: rgba(255, 255, 255, 0.15);
-      border-radius: 16px;
-      padding: 18px 14px;
-      text-align: center;
-      transition: transform 0.2s ease, background 0.3s ease;
-    }
-    .unit:hover {
-      transform: scale(1.05);
-      background: rgba(255, 255, 255, 0.25);
-    }
-    .value {
-      font-variant-numeric: tabular-nums;
-      font-size: clamp(28px, 6vw, 44px);
-      font-weight: 700;
-      line-height: 1;
-      color: #fff;
-    }
-    .label {
-      margin-top: 8px;
-      font-size: 12px;
-      letter-spacing: .4px;
-      text-transform: uppercase;
-      opacity: .85;
-    }
-    .bar {
-      height: 6px;
-      background: rgba(255, 255, 255, 0.2);
-      border-radius: 999px;
-      overflow: hidden;
-      margin-top: 12px;
-    }
-    .fill {
-      height: 100%;
-      background: linear-gradient(90deg, #459D47, #5CB85C);
-      width: 0%;
-      transition: width .2s ease;
-    }
-    @media (max-width:560px) {
-      .timer { grid-template-columns: repeat(2, 1fr); }
-    }
-    .done {
-      margin-top: 16px;
-      font-weight: 600;
-      color: #5CB85C;
-      display: none;
-      text-align: center;
-      font-size: 16px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobil Özel Görsel</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent;
+        }
+        
+        .image-container {
+            width: 100%;
+            text-align: center;
+        }
+        
+        /* MASAÜSTÜ GÖRSELİ (Varsayılan) */
+        .desktop-img {
+            display: block;
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+            margin: 0 auto;
+            border-radius: 15px;
+            border: 3px solid #459d47;
+            box-shadow: 0 5px 15px rgba(69, 157, 71, 0.3);
+        }
+        
+        /* MOBİL GÖRSELİ (Varsayılan gizli) */
+        .mobile-img {
+            display: none;
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            margin: 0 auto;
+            border-radius: 15px;
+            border: 3px solid #ff6b6b;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+        }
+        
+        /* MOBİL CİHAZLAR İÇİN */
+        @media only screen and (max-width: 768px) {
+            .desktop-img {
+                display: none;
+            }
+            .mobile-img {
+                display: block;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="card">
-    <h1> &#x23F3 Katılmak için kalan süre</h1>
-    <p class="sub"> </p>
-    <div class="timer" role="timer" aria-live="polite" aria-atomic="true">
-      <div class="unit"><div class="value" id="days">0</div><div class="label">Gün</div><div class="bar"><div class="fill" id="daysFill"></div></div></div>
-      <div class="unit"><div class="value" id="hours">00</div><div class="label">Saat</div><div class="bar"><div class="fill" id="hoursFill"></div></div></div>
-      <div class="unit"><div class="value" id="minutes">00</div><div class="label">Dakika</div><div class="bar"><div class="fill" id="minutesFill"></div></div></div>
-      <div class="unit"><div class="value" id="seconds">00</div><div class="label">Saniye</div><div class="bar"><div class="fill" id="secondsFill"></div></div></div>
+    <div class="image-container">
+        <!-- Masaüstü için görsel -->
+        <img class="desktop-img" 
+             src="https://imgur.com/masaustu-gorsel.jpg" 
+             alt="Masaüstü Promosyon">
+        
+        <!-- Mobil için görsel -->
+        <img class="mobile-img" 
+             src="https://imgur.com/mobil-gorsel.jpg" 
+             alt="Mobil Özel Promosyon">
     </div>
-    <div id="doneMsg" class="done">🎉 Süre doldu! Etkinlikleri kaçırmamak için sosyal medya hesaplarını takip et! </div>
-  </div>
-  <script>
-    let targetTime = new Date("2025-09-06T20:00:00");
-    const daysEl = document.getElementById('days');
-    const hoursEl = document.getElementById('hours');
-    const minutesEl = document.getElementById('minutes');
-    const secondsEl = document.getElementById('seconds');
-    const doneMsg = document.getElementById('doneMsg');
-    const daysFill = document.getElementById('daysFill');
-    const hoursFill = document.getElementById('hoursFill');
-    const minutesFill = document.getElementById('minutesFill');
-    const secondsFill = document.getElementById('secondsFill');
-    function pad(n){ return String(n).padStart(2,'0'); }
-    function render(){
-      const now = new Date();
-      const diff = Math.max(0, targetTime - now);
-      const totalSec = Math.floor(diff / 1000);
-      const d = Math.floor(totalSec / 86400);
-      const h = Math.floor((totalSec % 86400) / 3600);
-      const m = Math.floor((totalSec % 3600) / 60);
-      const s = totalSec % 60;
-      daysEl.textContent = d;
-      hoursEl.textContent = pad(h);
-      minutesEl.textContent = pad(m);
-      secondsEl.textContent = pad(s);
-      doneMsg.style.display = totalSec === 0 ? 'block' : 'none';
-      secondsFill.style.width = `${(s/60)*100}%`;
-      minutesFill.style.width = `${(m/60)*100}%`;
-      hoursFill.style.width = `${(h/24)*100}%`;
-      const approxDays = Math.min(100, Math.log10(d+1)/2 * 100);
-      daysFill.style.width = `${approxDays}%`;
-    }
-    setInterval(render, 250);
-    render();
-  </script>
+    
+    <script>
+        // Iframe boyutunu otomatik ayarla
+        function updateHeight() {
+            const height = document.body.scrollHeight;
+            window.parent.postMessage({ type: 'resize', height: height }, '*');
+        }
+        
+        window.addEventListener('load', updateHeight);
+        window.addEventListener('resize', updateHeight);
+    </script>
 </body>
 </html>
-
-
