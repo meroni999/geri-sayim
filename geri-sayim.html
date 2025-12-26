@@ -7,73 +7,84 @@
     <style>
         body {
             margin: 0;
-            padding: 10px;
+            padding: 0;
             background: transparent;
-            width: 100%;
+            font-family: Arial, sans-serif;
         }
         
         #mobile-special {
             display: none;
+            width: 100%;
+            text-align: center;
+            padding: 15px;
+            box-sizing: border-box;
         }
         
         @media (max-width: 768px) {
             #mobile-special {
                 display: block;
-                width: 100%;
-            }
-            
-            .promo-img {
-                width: 100% !important;
-                max-width: 100% !important;
-                height: auto !important;
-                display: block;
-                border-radius: 15px;
-                border: 3px solid #459d47;
-                box-shadow: 0 5px 20px rgba(69, 157, 71, 0.4);
             }
         }
         
-        /* 1080x1080 kare resim için */
-        @media (max-width: 768px) and (orientation: portrait) {
-            .promo-img {
-                width: 80vw !important;
-                max-width: 80vw !important;
-                height: 80vw !important; /* Kare yap */
-                margin: 0 auto;
-            }
+        .promo-img {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+            border: 3px solid #459d47;
+            box-shadow: 0 5px 20px rgba(69, 157, 71, 0.4);
+            display: block;
+            margin: 0 auto;
         }
     </style>
 </head>
 <body>
     <div id="mobile-special">
-        <img src="https://i.imgur.com/Fy1nKjY.jpeg" 
+        <!-- RESMİNİZİ BURAYA EKLEYİN -->
+        <img src="https://imgur.com/mobil-promosyon.jpg" 
              class="promo-img"
-             style="width: 100%; height: auto;"
-             alt="Mobil Özel">
+             alt="📱 MOBİL ÖZEL"
+             id="mobil-resim">
     </div>
     
     <script>
-        // Basit iframe boyut ayarı
-        function resizeParent() {
-            if (window.innerWidth <= 768) {
-                const img = document.querySelector('.promo-img');
-                if (img) {
-                    // 2 saniye sonra tekrar kontrol et (resim yüklenmesi için)
-                    setTimeout(() => {
-                        const height = img.offsetHeight + 20;
-                        window.parent.postMessage({ height: height }, '*');
-                    }, 100);
+        // Iframe boyutunu otomatik ayarla
+        function ayarlaIframeBoyutu() {
+            var isMobile = window.innerWidth <= 768;
+            var resim = document.getElementById('mobil-resim');
+            var yeniYukseklik = 1; // Masaüstü için 1px
+            
+            if (isMobile && resim) {
+                // Resmin gerçek yüksekliğini al
+                resim.onload = function() {
+                    yeniYukseklik = this.offsetHeight + 30; // + padding
+                    gonderBoyut(yeniYukseklik);
+                };
+                
+                // Resim zaten yüklüyse
+                if (resim.complete) {
+                    yeniYukseklik = resim.offsetHeight + 30;
+                    gonderBoyut(yeniYukseklik);
                 }
             } else {
-                window.parent.postMessage({ height: 1 }, '*');
+                gonderBoyut(yeniYukseklik);
             }
         }
         
-        window.addEventListener('load', resizeParent);
-        window.addEventListener('resize', resizeParent);
+        function gonderBoyut(yukseklik) {
+            // Ebeveyn iframe'e mesaj gönder
+            window.parent.postMessage({
+                type: 'resize',
+                height: yukseklik
+            }, '*');
+        }
         
-        // Her 500ms'de bir kontrol (güvenlik için)
-        setInterval(resizeParent, 500);
+        // Olayları dinle
+        window.addEventListener('load', ayarlaIframeBoyutu);
+        window.addEventListener('resize', ayarlaIframeBoyutu);
+        
+        // 100ms aralıklarla kontrol et
+        setInterval(ayarlaIframeBoyutu, 100);
     </script>
 </body>
 </html>
