@@ -3,46 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobil Özel</title>
     <style>
-        /* MASAÜSTÜ İÇİN: 0 PX */
-        @media (min-width: 769px) {
-            html, body {
-                height: 0 !important;
-                min-height: 0 !important;
-                max-height: 0 !important;
-                overflow: hidden !important;
-                margin: 0 !important;
-                padding: 0 !important;
+        body {
+            margin: 0;
+            padding: 10px;
+            background: transparent;
+            height: 380px; /* Iframe yüksekliğinden 20px az */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Varsayılan: GİZLE */
+        #mobile-content {
+            display: none;
+            text-align: center;
+            width: 100%;
+        }
+        
+        /* MOBİLDE: GÖSTER */
+        @media (max-width: 768px) {
+            #mobile-content {
+                display: block;
             }
         }
         
-        /* MOBİL İÇİN: NORMAL */
-        @media (max-width: 768px) {
-            body {
-                margin: 0;
-                padding: 20px;
-                text-align: center;
-                min-height: 400px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-            
-            .mobile-image {
-                width: 100%;
-                max-width: 350px;
-                height: auto;
-                border-radius: 12px;
-                border: 3px solid #459d47;
-                box-shadow: 0 5px 15px rgba(69, 157, 71, 0.3);
-            }
+        .mobile-img {
+            width: 100%;
+            max-width: 380px; /* Iframe'den biraz küçük */
+            height: auto;
+            max-height: 380px;
+            border-radius: 10px;
+            border: 2px solid #459d47;
         }
     </style>
 </head>
 <body>
-    <!-- RESİM -->
-    <img src="https://i.imgur.com/Fy1nKjY.jpeg" 
-         class="mobile-image"
-         alt="Mobil Özel Promosyon">
+    <div id="mobile-content">
+        <img src="https://i.imgur.com/Fy1nKjY.jpeg" 
+             class="mobile-img" 
+             alt="Mobil Özel"
+             style="width: 100%; max-width: 380px;">
+    </div>
 </body>
 </html>
