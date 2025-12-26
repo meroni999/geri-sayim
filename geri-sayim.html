@@ -7,31 +7,40 @@
     <style>
         body {
             margin: 0;
-            padding: 0;
+            padding: 10px;
             background: transparent;
+            width: 100%;
         }
         
-        /* Varsayılan: TAMAMEN GİZLE */
         #mobile-special {
             display: none;
-            width: 100%;
-            text-align: center;
         }
         
-        /* MOBİLDE: GÖSTER */
         @media (max-width: 768px) {
             #mobile-special {
                 display: block;
+                width: 100%;
+            }
+            
+            .promo-img {
+                width: 100% !important;
+                max-width: 100% !important;
+                height: auto !important;
+                display: block;
+                border-radius: 15px;
+                border: 3px solid #459d47;
+                box-shadow: 0 5px 20px rgba(69, 157, 71, 0.4);
             }
         }
         
-        .promo-img {
-            width: 100%;
-            max-width: 350px;
-            height: auto;
-            border-radius: 12px;
-            border: 3px solid #459d47;
-            box-shadow: 0 0 20px rgba(69, 157, 71, 0.3);
+        /* 1080x1080 kare resim için */
+        @media (max-width: 768px) and (orientation: portrait) {
+            .promo-img {
+                width: 80vw !important;
+                max-width: 80vw !important;
+                height: 80vw !important; /* Kare yap */
+                margin: 0 auto;
+            }
         }
     </style>
 </head>
@@ -39,7 +48,32 @@
     <div id="mobile-special">
         <img src="https://i.imgur.com/Fy1nKjY.jpeg" 
              class="promo-img"
-             alt="📱 MOBİL ÖZEL - %30 Ekstra Bonus">
+             style="width: 100%; height: auto;"
+             alt="Mobil Özel">
     </div>
+    
+    <script>
+        // Basit iframe boyut ayarı
+        function resizeParent() {
+            if (window.innerWidth <= 768) {
+                const img = document.querySelector('.promo-img');
+                if (img) {
+                    // 2 saniye sonra tekrar kontrol et (resim yüklenmesi için)
+                    setTimeout(() => {
+                        const height = img.offsetHeight + 20;
+                        window.parent.postMessage({ height: height }, '*');
+                    }, 100);
+                }
+            } else {
+                window.parent.postMessage({ height: 1 }, '*');
+            }
+        }
+        
+        window.addEventListener('load', resizeParent);
+        window.addEventListener('resize', resizeParent);
+        
+        // Her 500ms'de bir kontrol (güvenlik için)
+        setInterval(resizeParent, 500);
+    </script>
 </body>
 </html>
