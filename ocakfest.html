@@ -20,28 +20,6 @@
       min-height: 100vh;
       background: #ffffff;
       color: var(--text-color);
-      overflow: hidden;
-      position: relative;
-    }
-    
-    /* Ana sayfadaki yeşil parıltı efekti */
-    body::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: 20px;
-      box-shadow: 0 0 35px var(--secondary-color), inset 0 0 35px rgba(69,157,71,0.15);
-      pointer-events: none;
-      animation: greenPulse 2s infinite alternate;
-    }
-    
-    @keyframes greenPulse {
-      0% {
-        box-shadow: 0 0 25px var(--secondary-color), inset 0 0 25px rgba(69,157,71,0.15);
-      }
-      100% {
-        box-shadow: 0 0 35px var(--secondary-color), inset 0 0 35px rgba(69,157,71,0.25);
-      }
     }
     
     .card {
@@ -53,7 +31,6 @@
       overflow: hidden;
       border: 3px solid var(--primary-color);
       box-shadow: 0 0 25px var(--secondary-color), inset 0 0 15px var(--primary-color);
-      z-index: 1;
     }
     
     h1 {
@@ -185,7 +162,7 @@
 <body>
   <div class="card">
     <h1>🎆 1 Ocak Etkinliği İçin Geri Sayım 🎇</h1>
-    <p class="sub">Ocak ayı festivalinin başlamasına kalan süre</p>
+    <p class="sub">Ocak ayı festivaline katılmak için kalan süre</p>
     
     <div class="timer" role="timer" aria-live="polite" aria-atomic="true">
       <div class="unit">
