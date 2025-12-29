@@ -11,6 +11,7 @@
       --secondary-color: #5cb85c;
       --accent-color: #f8f9fa;
       --text-color: #333;
+      --background-color: #eaedf0;
     }
     
     body {
@@ -18,7 +19,7 @@
       display: grid;
       place-items: center;
       min-height: 100vh;
-      background: #ffffff;
+      background: var(--background-color);
       color: var(--text-color);
     }
     
@@ -161,8 +162,8 @@
 </head>
 <body>
   <div class="card">
-    <h1>🎆 2026 Ocak Ayı Festivali İçin Geri Sayım 🎇</h1>
-    <p class="sub">1 Ocak Etkinliğinin Açıklanmasına Kalan Süre</p>
+    <h1>🎆 1 Ocak Etkinliği İçin Geri Sayım 🎇</h1>
+    <p class="sub">Ocak ayı festivaline katılmak için kalan süre</p>
     
     <div class="timer" role="timer" aria-live="polite" aria-atomic="true">
       <div class="unit">
